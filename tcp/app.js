@@ -4,13 +4,18 @@ const app = initialize();
 
 app.use("/use", (req, res, next) => {
   console.log(req.path, "USE 1 with params ", req.params.id);
-  // res.send(`<h1>USE 1</h1>`);
+  // res.send(`<h1>Use route ${req.path} and Params => ${req.params.id}</h1>`);
   next();
 });
 
-app.post("/use/:id", (req, res, next) => {
+app.get("/use/:id/:name", (req, res, next) => {
   console.log(req.path, "GET 1 with params ", req.params.id);
-  res.send(`<h1>Get route ${req.path} and Params => ${req.params.id}</h1>`);
+  res.send(
+    `<h1>Get route ${req.path} and Params => ${req.params.id} , ${req.params.name}</h1>`,
+    200,
+    "text/html",
+    10
+  );
   // next();
 });
 

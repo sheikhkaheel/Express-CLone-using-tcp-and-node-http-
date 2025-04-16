@@ -137,15 +137,21 @@ async function sendResponse(socket, request, route) {
       const isMatch = match(nextMatchedRoute.path);
       const result = isMatch(request.path);
       request.params = result.params;
+
       nextMatchedRoute.handler(
         request,
         {
-          send: (data, status = "200", content_type = "text/html") => {
+          send: (
+            data,
+            status = "200",
+            content_type = "text/html",
+            content_length
+          ) => {
             socket.write(
-              `HTTP/1.1 ${status} OK \r\n` +
-                `Content-Type:` +
-                content_type +
-                `\r\n\r\n`
+              `HTTP/1.1 ${status} OK \r\n
+               Content-Type: ${content_type} \r\n
+               Content-Length: ${content_length}
+               \r\n\r\n`
             );
             socket.write(data);
             socket.end();
