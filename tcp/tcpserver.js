@@ -1,11 +1,6 @@
 import net from "net";
-import fs from "fs";
-import mime from "mime";
-import path from "path";
 import mergeDescriptors from "merge-descriptors";
 import { match } from "path-to-regexp";
-// const port = "9000";
-// const hostname = "localhost";
 
 /**
  *
@@ -33,8 +28,6 @@ const onConnection = (socket, route) => {
     }
   });
 };
-
-// console.log(route);
 
 const server = (route) => {
   return net.createServer((socket) => onConnection(socket, route));
@@ -144,24 +137,23 @@ async function sendResponse(socket, request, route) {
       const isMatch = match(nextMatchedRoute.path);
       const result = isMatch(request.path);
       request.params = result.params;
-    }
-
-    nextMatchedRoute.handler(
-      request,
-      {
-        send: (data, status = "200", content_type = "text/html") => {
-          socket.write(
-            `HTTP/1.1 ${status} OK \r\n` +
-              `Content-Type:` +
-              content_type +
-              `\r\n\r\n`
-          );
-          socket.write(data);
-          socket.end();
+      nextMatchedRoute.handler(
+        request,
+        {
+          send: (data, status = "200", content_type = "text/html") => {
+            socket.write(
+              `HTTP/1.1 ${status} OK \r\n` +
+                `Content-Type:` +
+                content_type +
+                `\r\n\r\n`
+            );
+            socket.write(data);
+            socket.end();
+          },
         },
-      },
-      next
-    );
+        next
+      );
+    }
   }
 
   next();

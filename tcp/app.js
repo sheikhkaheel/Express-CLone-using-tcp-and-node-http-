@@ -3,13 +3,13 @@ import { initialize } from "./tcpserver.js";
 const app = initialize();
 
 app.use("/use", (req, res, next) => {
-  console.log(req.path, "USE 1");
+  console.log(req.path, "USE 1 with params ", req.params.id);
   // res.send(`<h1>USE 1</h1>`);
   next();
 });
 
-app.get("/use/:id", (req, res, next) => {
-  console.log(req.path, "GET 1");
+app.post("/use/:id", (req, res, next) => {
+  console.log(req.path, "GET 1 with params ", req.params.id);
   res.send(`<h1>Get route ${req.path} and Params => ${req.params.id}</h1>`);
   // next();
 });
