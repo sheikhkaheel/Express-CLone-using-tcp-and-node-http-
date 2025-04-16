@@ -1,0 +1,13 @@
+{
+  "main": "server.js",
+  "scripts": {
+    "dev": "nodemon ."
+  },
+  "dependencies": {
+    "merge-descriptors": "^2.0.0",
+    "mime": "^4.0.7",
+    "path": "^0.12.7",
+    "path-to-regexp": "^8.2.0"
+  },
+  "type": "module"
+}
